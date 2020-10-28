@@ -1,10 +1,17 @@
 from rest_framework.serializers import ModelSerializer, CharField
-from webapp.models import Quote
+from webapp.models import Quote, Vote
+
+
+class VoteCreateSerializer(ModelSerializer):
+    class Meta:
+        model = Vote
+        fields = "__all__"
 
 
 class QuoteSerializer(ModelSerializer):
     status_display = CharField(max_length=20, source='get_status_display',
                                read_only=True)
+    votes = VoteCreateSerializer(many=True)
 
     class Meta:
         model = Quote
@@ -20,3 +27,15 @@ class QuoteCreateSerializer(QuoteSerializer):
 class QuoteUpdateSerializer(QuoteSerializer):
     class Meta(QuoteSerializer.Meta):
         read_only_fields = ['author', 'email', 'rating']
+
+
+
+
+
+
+
+
+
+
+
+
